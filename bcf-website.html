@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCF Consultoria – Namibia</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-1: #00BFFF;
+    --blue-2: #0066FF;
+    --blue-3: #003DA5;
+    --blue-dark: #001F6B;
+    --white: #FFFFFF;
+    --off-white: #F0F6FF;
+    --cyan: #00E5FF;
+    --text-body: #E8F0FF;
+    --text-muted: #90AACF;
+    --card-bg: rgba(0, 40, 120, 0.5);
+    --card-border: rgba(0, 191, 255, 0.2);
+    --gradient-hero: linear-gradient(135deg, #001F6B 0%, #003DA5 40%, #0066FF 75%, #00BFFF 100%);
+    --gradient-section: linear-gradient(180deg, #001450 0%, #002080 100%);
+    --gradient-card: linear-gradient(135deg, rgba(0,60,160,0.6) 0%, rgba(0,30,100,0.8) 100%);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--blue-dark);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  .grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,191,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,191,255,0.08) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px;
+    background: rgba(0, 15, 60, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,191,255,0.15);
+    transition: padding 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--cyan); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500;
+    color: var(--text-body);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px;
+    background: var(--cyan);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--blue-2), var(--blue-1));
+    color: var(--white); border: none; cursor: pointer;
+    padding: 10px 24px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* HERO */
+  #home {
+    position: relative;
+    min-height: 100vh;
+    display: flex; align-items: center;
+    background: var(--gradient-hero);
+    overflow: hidden;
+    padding: 0 60px;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 660px;
+    padding-top: 100px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,229,255,0.12);
+    border: 1px solid rgba(0,229,255,0.3);
+    padding: 6px 16px; border-radius: 100px;
+    font-size: 13px; font-weight: 500; color: var(--cyan);
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: pulse 2s infinite; }
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-title .accent { color: var(--cyan); }
+  .hero-subtitle {
+    font-size: 18px; font-weight: 400;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--cyan), var(--blue-2));
+    color: var(--white);
+    padding: 15px 32px; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px; font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 30px rgba(0,191,255,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,191,255,0.5); }
+  .btn-outline {
+    border: 2px solid rgba(255,255,255,0.4);
+    color: var(--white);
+    padding: 14px 32px; border-radius: 10px;
+    font-size: 16px; font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--cyan); background: rgba(0,229,255,0.1); }
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 56px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat-item { text-align: left; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px; font-weight: 800;
+    color: var(--cyan); line-height: 1;
+  }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+
+  .hero-visual {
+    position: absolute; right: 0; top: 0; bottom: 0;
+    width: 50%;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+  }
+  .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(0,191,255,0.4) 0%, transparent 70%); right: -100px; top: 50%; transform: translateY(-50%); }
+  .orb-2 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,102,255,0.5) 0%, transparent 70%); right: 100px; top: 20%; }
+  .hero-card-float {
+    position: relative; z-index: 2;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 32px;
+    width: 340px;
+    animation: float 4s ease-in-out infinite;
+  }
+  .hero-card-float h3 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+  .service-pill {
+    display: inline-block;
+    background: rgba(0,191,255,0.15);
+    border: 1px solid rgba(0,191,255,0.3);
+    color: var(--cyan);
+    padding: 6px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 500;
+    margin: 4px;
+  }
+
+  /* SECTIONS */
+  section { position: relative; padding: 100px 60px; }
+  .section-label {
+    font-size: 12px; font-weight: 600;
+    color: var(--cyan); letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+  .section-sub {
+    font-size: 17px; color: var(--text-muted);
+    line-height: 1.7; max-width: 600px;
+  }
+
+  /* SOBRE */
+  #sobre {
+    background: var(--gradient-section);
+    overflow: hidden;
+  }
+  .sobre-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .sobre-facts {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px; margin-top: 40px;
+  }
+  .fact-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .fact-card .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px; font-weight: 800;
+    color: var(--cyan); line-height: 1;
+  }
+  .fact-card p { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
+
+  .sobre-visual {
+    position: relative;
+  }
+  .sobre-img-container {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .swak-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #002080 0%, #003DA5 50%, #005580 100%);
+  }
+  .swak-content {
+    position: relative; z-index: 2;
+    text-align: center; padding: 40px;
+  }
+  .swak-icon { font-size: 60px; margin-bottom: 16px; }
+  .swak-content h3 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; }
+  .swak-content p { color: var(--text-muted); font-size: 15px; margin-top: 8px; }
+  .badge-float {
+    position: absolute;
+    background: linear-gradient(135deg, var(--blue-2), var(--blue-3));
+    border: 1px solid rgba(0,191,255,0.3);
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 13px; font-weight: 600;
+  }
+  .badge-float.top-right { top: -16px; right: -16px; }
+  .badge-float.bot-left { bottom: -16px; left: -16px; }
+
+  /* SERVIÇOS */
+  #servicos {
+    background: linear-gradient(180deg, #002080 0%, #001450 100%);
+  }
+  .services-header { text-align: center; max-width: 600px; margin: 0 auto 64px; }
+  .services-header .section-sub { margin: 0 auto; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+    cursor: pointer;
+  }
+  .service-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--blue-2));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { transform: translateY(-6px); border-color: rgba(0,191,255,0.4); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, rgba(0,191,255,0.2), rgba(0,102,255,0.2));
+    border: 1px solid rgba(0,191,255,0.3);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin-bottom: 24px;
+  }
+  .service-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .service-card p { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+  .service-items { list-style: none; }
+  .service-items li {
+    font-size: 14px; color: var(--text-body);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .service-items li::before { content: '→'; color: var(--cyan); font-size: 13px; }
+
+  /* TURISMO */
+  #turismo {
+    background: linear-gradient(180deg, #001450 0%, #001F6B 100%);
+  }
+  .turismo-inner { max-width: 1200px; margin: 0 auto; }
+  .turismo-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: start; margin-top: 48px;
+  }
+  .tour-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .tour-header {
+    background: linear-gradient(135deg, var(--blue-3), var(--blue-2));
+    padding: 28px 28px 20px;
+  }
+  .tour-header h3 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; }
+  .tour-header p { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 6px; }
+  .tour-body { padding: 24px 28px; }
+  .tour-body ul { list-style: none; }
+  .tour-body ul li {
+    padding: 9px 0;
+    font-size: 14px; color: var(--text-body);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tour-body ul li::before { content: '✦'; color: var(--cyan); font-size: 10px; }
+  .tour-pricing {
+    padding: 20px 28px 28px;
+    display: flex; gap: 16px;
+  }
+  .price-tag {
+    flex: 1;
+    background: rgba(0,191,255,0.1);
+    border: 1px solid rgba(0,191,255,0.2);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .price-tag .amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: var(--cyan);
+  }
+  .price-tag .label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  .stadia-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .stadia-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 18px 22px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .stadia-item .name { font-size: 15px; font-weight: 600; }
+  .stadia-item .price-s {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 800;
+    color: var(--cyan);
+  }
+
+  /* EDUCAÇÃO */
+  #educacao {
+    background: linear-gradient(180deg, #001F6B 0%, #002080 100%);
+  }
+  .edu-inner { max-width: 1200px; margin: 0 auto; }
+  .tab-nav {
+    display: flex; gap: 8px; margin: 40px 0 32px;
+    background: rgba(0,30,100,0.5);
+    border: 1px solid rgba(0,191,255,0.2);
+    border-radius: 12px; padding: 6px;
+    width: fit-content;
+  }
+  .tab-btn {
+    padding: 10px 24px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; border: none;
+    background: transparent; color: var(--text-muted);
+    transition: all 0.3s;
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--blue-2), var(--blue-1));
+    color: var(--white);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .pkg-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .pkg-card:hover { transform: translateY(-4px); border-color: rgba(0,191,255,0.5); }
+  .pkg-card.featured {
+    border-color: rgba(0,229,255,0.5);
+    background: linear-gradient(135deg, rgba(0,100,200,0.6), rgba(0,60,150,0.8));
+  }
+  .pkg-card.featured::before {
+    content: '⭐ Popular';
+    position: absolute; top: 16px; right: 16px;
+    background: var(--cyan); color: var(--blue-dark);
+    font-size: 11px; font-weight: 700;
+    padding: 4px 10px; border-radius: 100px;
+  }
+  .pkg-num {
+    font-size: 12px; font-weight: 600;
+    color: var(--cyan); letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .pkg-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 30px; font-weight: 800;
+    color: var(--white); margin-bottom: 20px;
+    line-height: 1;
+  }
+  .pkg-price span { font-size: 16px; color: var(--text-muted); }
+  .pkg-features { list-style: none; }
+  .pkg-features li {
+    font-size: 13px; color: var(--text-body);
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .pkg-features li::before { content: '✓'; color: var(--cyan); font-weight: 700; flex-shrink: 0; }
+
+  /* CONSULTORIA */
+  #consultoria {
+    background: linear-gradient(180deg, #002080 0%, #001450 100%);
+  }
+  .consult-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .consult-types { margin-top: 40px; display: flex; flex-direction: column; gap: 16px; }
+  .consult-type {
+    display: flex; gap: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 22px;
+    align-items: flex-start;
+  }
+  .consult-type-icon {
+    font-size: 28px; flex-shrink: 0;
+    width: 52px; height: 52px;
+    background: rgba(0,191,255,0.1);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .consult-type h4 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  .consult-type p { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+
+  .consult-booking-card {
+    background: linear-gradient(135deg, rgba(0,80,200,0.5), rgba(0,40,120,0.7));
+    border: 1px solid rgba(0,191,255,0.3);
+    border-radius: 24px;
+    padding: 48px 40px;
+  }
+  .consult-booking-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .invest-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 52px; font-weight: 800;
+    color: var(--cyan); line-height: 1;
+    margin: 24px 0 8px;
+  }
+  .invest-label { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; }
+  .format-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+  .format-chip {
+    background: rgba(0,191,255,0.1);
+    border: 1px solid rgba(0,191,255,0.3);
+    color: var(--cyan);
+    padding: 8px 18px; border-radius: 100px;
+    font-size: 13px; font-weight: 500;
+  }
+  .booking-form { display: flex; flex-direction: column; gap: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-size: 13px; font-weight: 500; color: var(--text-muted); }
+  .form-input, .form-select, .form-textarea {
+    background: rgba(0,30,100,0.5);
+    border: 1px solid rgba(0,191,255,0.2);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; color: var(--white);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--cyan);
+  }
+  .form-select option { background: var(--blue-dark); }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .btn-book {
+    background: linear-gradient(135deg, var(--cyan), var(--blue-2));
+    color: var(--white); border: none; cursor: pointer;
+    padding: 16px; border-radius: 12px;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 700;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 6px;
+  }
+  .btn-book:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,191,255,0.4); }
+
+  /* PACOTES ALOJAMENTO */
+  #pacotes {
+    background: linear-gradient(180deg, #001450 0%, #001F6B 100%);
+  }
+  .pac-inner { max-width: 1200px; margin: 0 auto; }
+  .pac-toggle {
+    display: flex; gap: 8px;
+    background: rgba(0,30,100,0.5);
+    border: 1px solid rgba(0,191,255,0.2);
+    border-radius: 12px; padding: 6px;
+    width: fit-content; margin: 40px 0 32px;
+  }
+  .pac-tab {
+    padding: 10px 24px; border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; border: none;
+    background: transparent; color: var(--text-muted);
+    transition: all 0.3s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .pac-tab.active {
+    background: linear-gradient(135deg, var(--blue-2), var(--blue-1));
+    color: var(--white);
+  }
+  .pac-table-wrap { display: none; }
+  .pac-table-wrap.active { display: block; }
+  .pac-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+  }
+  .pac-table th {
+    font-size: 12px; font-weight: 600;
+    color: var(--text-muted); letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    text-align: left;
+  }
+  .pac-table td {
+    padding: 18px 20px;
+    background: var(--card-bg);
+    border-top: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+    font-size: 15px;
+  }
+  .pac-table td:first-child {
+    border-left: 1px solid var(--card-border);
+    border-radius: 12px 0 0 12px;
+  }
+  .pac-table td:last-child {
+    border-right: 1px solid var(--card-border);
+    border-radius: 0 12px 12px 0;
+  }
+  .tier-badge {
+    display: inline-block;
+    padding: 4px 12px; border-radius: 100px;
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .tier-E { background: rgba(0,191,255,0.15); color: var(--cyan); }
+  .tier-P { background: rgba(0,102,255,0.2); color: #7AB8FF; }
+  .tier-PR { background: rgba(0,229,255,0.15); color: #AAEEFF; }
+  .price-cell {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--cyan);
+  }
+
+  /* PAGAMENTO */
+  #pagamento {
+    background: linear-gradient(180deg, #001F6B 0%, #001450 100%);
+  }
+  .pay-inner { max-width: 900px; margin: 0 auto; }
+  .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+  .pay-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 32px;
+  }
+  .pay-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .country-flag { font-size: 22px; }
+  .pay-divider { height: 1px; background: rgba(0,191,255,0.15); margin: 16px 0; }
+  .pay-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
+  .pay-key { font-size: 13px; color: var(--text-muted); }
+  .pay-val { font-size: 14px; font-weight: 600; color: var(--text-body); }
+
+  /* CONTACTO */
+  #contacto {
+    background: linear-gradient(180deg, #001450 0%, #000C40 100%);
+  }
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; max-width: 1200px; margin: 0 auto;
+    align-items: start;
+  }
+  .contact-info { margin-top: 40px; display: flex; flex-direction: column; gap: 20px; }
+  .contact-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .contact-icon {
+    font-size: 22px; width: 48px; height: 48px;
+    background: rgba(0,191,255,0.1);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-item h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .contact-item p, .contact-item a {
+    font-size: 14px; color: var(--text-muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .contact-item a:hover { color: var(--cyan); }
+
+  .contact-form-wrap {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 40px;
+  }
+  .contact-form-wrap h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px; font-weight: 800;
+    margin-bottom: 28px;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* FOOTER */
+  footer {
+    background: #000A38;
+    border-top: 1px solid rgba(0,191,255,0.1);
+    padding: 48px 60px 32px;
+  }
+  .footer-inner {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .footer-logo { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; }
+  .footer-logo span { color: var(--cyan); }
+  .footer-copy { font-size: 13px; color: var(--text-muted); }
+  .footer-socials { display: flex; gap: 12px; }
+  .social-btn {
+    width: 40px; height: 40px;
+    background: rgba(0,191,255,0.1);
+    border: 1px solid rgba(0,191,255,0.2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; font-size: 16px;
+    transition: background 0.2s;
+  }
+  .social-btn:hover { background: rgba(0,191,255,0.2); }
+
+  /* WHATSAPP FLOAT */
+  .wa-float {
+    position: fixed; bottom: 32px; right: 32px; z-index: 200;
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 8px 30px rgba(37,211,102,0.5);
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: float 3s ease-in-out infinite;
+  }
+  .wa-float:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(37,211,102,0.7); }
+  .wa-tooltip {
+    position: absolute; right: 72px;
+    background: rgba(0,20,80,0.95);
+    border: 1px solid rgba(0,191,255,0.3);
+    padding: 8px 16px; border-radius: 8px;
+    font-size: 13px; font-weight: 600; white-space: nowrap;
+    opacity: 0; transform: translateX(10px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+  }
+  .wa-float:hover .wa-tooltip { opacity: 1; transform: translateX(0); }
+
+  /* CURRENCY CONVERTER */
+  .converter-banner {
+    background: rgba(0,191,255,0.08);
+    border: 1px solid rgba(0,191,255,0.2);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-top: 40px;
+    display: flex; align-items: center; gap: 24px;
+    flex-wrap: wrap;
+  }
+  .converter-banner h4 { font-size: 15px; font-weight: 600; white-space: nowrap; }
+  .conv-input {
+    background: rgba(0,30,100,0.6);
+    border: 1px solid rgba(0,191,255,0.3);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 15px; color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    width: 120px; outline: none;
+  }
+  .conv-select {
+    background: rgba(0,30,100,0.6);
+    border: 1px solid rgba(0,191,255,0.3);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 15px; color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    outline: none; cursor: pointer;
+  }
+  .conv-select option { background: var(--blue-dark); }
+  .conv-result {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 800;
+    color: var(--cyan);
+  }
+  .conv-arrow { font-size: 20px; color: var(--text-muted); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--blue-dark); }
+  ::-webkit-scrollbar-thumb { background: rgba(0,191,255,0.3); border-radius: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    nav { padding: 16px 30px; }
+    section { padding: 80px 30px; }
+    #home { padding: 0 30px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .packages-grid { grid-template-columns: 1fr 1fr; }
+    .turismo-grid { grid-template-columns: 1fr; }
+    .consult-inner { grid-template-columns: 1fr; gap: 40px; }
+    .sobre-inner { grid-template-columns: 1fr; gap: 40px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 40px 30px 24px; }
+    footer .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero-visual { display: none; }
+    .hero-content { max-width: 100%; }
+    .services-grid { grid-template-columns: 1fr; }
+    .packages-grid { grid-template-columns: 1fr; }
+    .pay-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">BC<span>F</span></div>
+  <ul class="nav-links">
+    <li><a href="#home">Início</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#educacao">Vistos</a></li>
+    <li><a href="#consultoria">Consultoria</a></li>
+    <li><a href="#pacotes">Pacotes</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/264817736080" class="nav-cta" target="_blank">💬 WhatsApp</a>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="grid-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      BCF Consultoria · Namíbia
+    </div>
+    <h1 class="hero-title">
+      A sua ponte<br>para a <span class="accent">Namíbia</span>
+    </h1>
+    <p class="hero-subtitle">
+      Emigração, estudos, turismo e tratamento médico — com atendimento personalizado, profissional e transparente desde o primeiro contacto.
+    </p>
+    <div class="hero-btns">
+      <a href="#servicos" class="btn-primary">Ver Serviços</a>
+      <a href="#consultoria" class="btn-outline">Agendar Consultoria</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Anos de experiência</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Clientes com vistos aprovados</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Taxa de aprovação</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-orb orb-1"></div>
+    <div class="hero-orb orb-2"></div>
+    <div class="hero-card-float">
+      <h3>🌍 O que oferecemos</h3>
+      <div>
+        <span class="service-pill">✈️ Turismo</span>
+        <span class="service-pill">🎓 Educação</span>
+        <span class="service-pill">📄 Vistos</span>
+        <span class="service-pill">🏥 Saúde</span>
+        <span class="service-pill">🏠 Alojamento</span>
+        <span class="service-pill">🚗 Transporte</span>
+        <span class="service-pill">💬 Consultoria</span>
+        <span class="service-pill">🌐 Tradução</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="grid-bg"></div>
+  <div class="sobre-inner">
+    <div>
+      <div class="section-label">Quem Somos</div>
+      <h2 class="section-title">Mais de 4 anos<br>a servir com excelência</h2>
+      <p class="section-sub">
+        A BCF é uma empresa dinâmica e versátil, dedicada a oferecer soluções completas em turismo, serviços de apoio estudantil e assistência personalizada para quem visita ou deseja se estabelecer na Namíbia.
+      </p>
+      <p class="section-sub" style="margin-top: 16px;">
+        Com um forte compromisso com a excelência e a satisfação do cliente, a BCF destaca-se pela sua abordagem humanizada, profissional e eficiente — mantendo os clientes sempre informados e colocando a sua segurança em primeiro lugar.
+      </p>
+      <div class="sobre-facts">
+        <div class="fact-card">
+          <div class="num">20+</div>
+          <p>Clientes com processos de visto aprovados com sucesso</p>
+        </div>
+        <div class="fact-card">
+          <div class="num">4+</div>
+          <p>Anos a tramitar vistos de estudante na Namíbia</p>
+        </div>
+        <div class="fact-card">
+          <div class="num">100%</div>
+          <p>Taxa de aprovação em todos os processos acompanhados</p>
+        </div>
+        <div class="fact-card">
+          <div class="num">3</div>
+          <p>Frentes de atuação: turismo, educação e assistência</p>
+        </div>
+      </div>
+    </div>
+    <div class="sobre-visual">
+      <div class="sobre-img-container">
+        <div class="swak-bg"></div>
+        <div class="swak-content">
+          <div class="swak-icon">🏜️</div>
+          <h3>Swakopmund</h3>
+          <p>A Pérola do Atlântico Africano</p>
+        </div>
+      </div>
+      <div class="badge-float top-right">🇳🇦 Baseados em Windhoek</div>
+      <div class="badge-float bot-left">🇦🇴 Clientes de Angola</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="grid-bg"></div>
+  <div class="services-header">
+    <div class="section-label">O que fazemos</div>
+    <h2 class="section-title">Serviços Completos<br>para a sua Jornada</h2>
+    <p class="section-sub">Da chegada à instalação definitiva, a BCF está ao seu lado em cada etapa.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">✈️</div>
+      <h3>Turismo & Aluguer</h3>
+      <p>Explore a Namíbia com pacotes completos para Swakopmund e aluguer de viaturas.</p>
+      <ul class="service-items">
+        <li>Tour completo por Swakopmund</li>
+        <li>Passeio de moto no deserto</li>
+        <li>Passeio de camelo nas dunas</li>
+        <li>Museu de Cristal e beira-mar</li>
+        <li>Transporte ida e volta incluído</li>
+        <li>Aluguer de viaturas</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎓</div>
+      <h3>Educação & Vistos</h3>
+      <p>Assistência completa em matrículas, vistos de estudante e renovações.</p>
+      <ul class="service-items">
+        <li>Visto de estudante (1ª vez)</li>
+        <li>Renovação de visto</li>
+        <li>Inscrição em instituições</li>
+        <li>Tradução de documentos</li>
+        <li>Consulta médica incluída</li>
+        <li>Organização completa de dossier</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🤝</div>
+      <h3>Assistência Personalizada</h3>
+      <p>Guia, tradução, transporte e apoio documental para estrangeiros na Namíbia.</p>
+      <ul class="service-items">
+        <li>Guia normal e VIP com viatura</li>
+        <li>Tradução oficial de documentos</li>
+        <li>Transporte aeroporto-cidade</li>
+        <li>Procura de alojamento</li>
+        <li>Apoio médico e agendamentos</li>
+        <li>Aulas de inglês ao domicílio</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TURISMO -->
+<section id="turismo">
+  <div class="grid-bg"></div>
+  <div class="turismo-inner">
+    <div class="section-label">Turismo & Estadia</div>
+    <h2 class="section-title">Descubra a Namíbia<br>com a BCF</h2>
+    <div class="turismo-grid">
+      <div>
+        <div class="tour-card">
+          <div class="tour-header">
+            <h3>🏜️ Pacote Turístico Swakopmund</h3>
+            <p>Experiência completa com guia e transporte incluídos</p>
+          </div>
+          <div class="tour-body">
+            <ul>
+              <li>Tour completo pela cidade</li>
+              <li>Passeio de moto no deserto</li>
+              <li>Passeio de camelo nas dunas</li>
+              <li>Caminhada guiada à beira-mar</li>
+              <li>Visita ao Museu de Cristal</li>
+              <li>Relaxamento nas areias do deserto</li>
+              <li>Transporte ida e volta</li>
+              <li>Acompanhamento personalizado</li>
+            </ul>
+          </div>
+          <div class="tour-pricing">
+            <div class="price-tag">
+              <div class="amount">N$ 5.100</div>
+              <div class="label">Um dia</div>
+            </div>
+            <div class="price-tag">
+              <div class="amount">N$ 3.850</div>
+              <div class="label">Por dia (3+ dias)</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 20px;">
+          <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:12px;">🚗 Transporte Aeroporto–Cidade</h3>
+          <div class="stadia-grid">
+            <div class="stadia-item">
+              <div><div class="name">Normal (1 pessoa)</div><div style="font-size:13px;color:var(--text-muted)">Aeroporto Internacional → Cidade</div></div>
+              <div class="price-s">N$ 400</div>
+            </div>
+            <div class="stadia-item">
+              <div><div class="name">Familiar (2+ pessoas)</div><div style="font-size:13px;color:var(--text-muted)">Por pessoa</div></div>
+              <div class="price-s">N$ 350</div>
+            </div>
+            <div class="stadia-item">
+              <div><div class="name">VIP (5–6 lugares)</div><div style="font-size:13px;color:var(--text-muted)">Viatura exclusiva</div></div>
+              <div class="price-s">N$ 1.000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;">🏠 Alojamento & Guia</h3>
+        <div class="stadia-grid">
+          <div class="stadia-item">
+            <div><div class="name">Acomodação Estudantil</div><div style="font-size:13px;color:var(--text-muted)">Por pessoa</div></div>
+            <div class="price-s">N$ 750</div>
+          </div>
+          <div class="stadia-item">
+            <div><div class="name">Acomodação Familiar</div><div style="font-size:13px;color:var(--text-muted)">Família completa</div></div>
+            <div class="price-s">N$ 1.500</div>
+          </div>
+          <div class="stadia-item">
+            <div><div class="name">Estadia Temporária</div><div style="font-size:13px;color:var(--text-muted)">Curta duração</div></div>
+            <div class="price-s">N$ 450</div>
+          </div>
+        </div>
+        <div style="margin-top:20px;">
+          <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:12px;">🗺️ Serviço de Guia</h3>
+          <div class="stadia-grid">
+            <div class="stadia-item">
+              <div><div class="name">Guia Normal (08h–18h)</div><div style="font-size:13px;color:var(--text-muted)">Diário</div></div>
+              <div class="price-s">N$ 300</div>
+            </div>
+            <div class="stadia-item">
+              <div><div class="name">Guia Normal Semanal</div><div style="font-size:13px;color:var(--text-muted)">75% depósito</div></div>
+              <div class="price-s">N$ 1.750</div>
+            </div>
+            <div class="stadia-item">
+              <div><div class="name">Guia VIP com Viatura</div><div style="font-size:13px;color:var(--text-muted)">Pré-pago, 08h–18h</div></div>
+              <div class="price-s">N$ 700</div>
+            </div>
+            <div class="stadia-item">
+              <div><div class="name">Guia VIP Semanal</div><div style="font-size:13px;color:var(--text-muted)">Com viatura, 08h–18h</div></div>
+              <div class="price-s">N$ 4.500</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:20px;">
+          <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:12px;">📚 Curso de Inglês (Domicílio)</h3>
+          <div class="stadia-grid">
+            <div class="stadia-item">
+              <div><div class="name">Segunda a Sexta</div><div style="font-size:13px;color:var(--text-muted)">Por pessoa</div></div>
+              <div class="price-s">N$ 1.500</div>
+            </div>
+            <div class="stadia-item">
+              <div><div class="name">3 vezes por semana</div><div style="font-size:13px;color:var(--text-muted)">Por pessoa</div></div>
+              <div class="price-s">N$ 1.200</div>
+            </div>
+            <div class="stadia-item">
+              <div><div class="name">Inscrição e formulário</div><div style="font-size:13px;color:var(--text-muted)">Taxa única</div></div>
+              <div class="price-s">N$ 50</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCAÇÃO & VISTOS -->
+<section id="educacao">
+  <div class="grid-bg"></div>
+  <div class="edu-inner">
+    <div class="section-label">Educação & Vistos</div>
+    <h2 class="section-title">O nosso Core Business:<br>Vistos de Estudante</h2>
+    <p class="section-sub">Mais de 4 anos a auxiliar estudantes angolanos e internacionais. Todos os processos aprovados.</p>
+
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab('primeira', this)">🆕 Primeiro Visto</button>
+      <button class="tab-btn" onclick="switchTab('renovacao', this)">🔄 Renovação</button>
+    </div>
+
+    <div id="primeira" class="tab-content active">
+      <div class="packages-grid">
+        <div class="pkg-card">
+          <div class="pkg-num">Pacote 1</div>
+          <div class="pkg-price">N$ 1.450<br><span>por processo</span></div>
+          <ul class="pkg-features">
+            <li>Preenchimento de formulários</li>
+            <li>Entrega no Ministério do Interior</li>
+            <li>Identificação como agente</li>
+          </ul>
+        </div>
+        <div class="pkg-card featured">
+          <div class="pkg-num">Pacote 2</div>
+          <div class="pkg-price">N$ 3.950<br><span>por processo</span></div>
+          <ul class="pkg-features">
+            <li>Tradução de documentos</li>
+            <li>Preenchimento de formulários</li>
+            <li>Consulta médica</li>
+            <li>Organização completa (cópias, carimbos, registo criminal)</li>
+            <li>Entrega no Ministério</li>
+            <li>Identificação como agente</li>
+          </ul>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-num">Pacote 3</div>
+          <div class="pkg-price">N$ 5.000<br><span>por processo</span></div>
+          <ul class="pkg-features">
+            <li>Tradução de documentos</li>
+            <li>Consulta médica</li>
+            <li>Organização de todos os documentos</li>
+            <li>Preenchimento de formulários</li>
+            <li>Inscrição na instituição (matrícula)</li>
+            <li>Entrega no Ministério</li>
+            <li>Identificação como agente</li>
+          </ul>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-num">Pacote 4</div>
+          <div class="pkg-price">N$ 7.000<br><span>por processo</span></div>
+          <ul class="pkg-features">
+            <li>Tradução de documentos</li>
+            <li>Preenchimento de formulários</li>
+            <li>Inscrição na instituição</li>
+            <li>Organização completa de documentos</li>
+            <li>Entrega no Ministério</li>
+            <li>Consulta médica</li>
+            <li>Identificação como agente</li>
+            <li>✦ Carimbo de aprovação no Passaporte</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="renovacao" class="tab-content">
+      <div class="packages-grid">
+        <div class="pkg-card">
+          <div class="pkg-num">Pacote 1</div>
+          <div class="pkg-price">N$ 870<br><span>renovação</span></div>
+          <ul class="pkg-features">
+            <li>Preenchimento de formulários</li>
+            <li>Entrega no Ministério do Interior</li>
+            <li>Identificação como agente</li>
+          </ul>
+        </div>
+        <div class="pkg-card featured">
+          <div class="pkg-num">Pacote 2</div>
+          <div class="pkg-price">N$ 3.250<br><span>renovação</span></div>
+          <ul class="pkg-features">
+            <li>Tradução de documentos</li>
+            <li>Preenchimento de formulários</li>
+            <li>Organização completa (cópias, carimbos, registo criminal)</li>
+            <li>Entrega no Ministério</li>
+            <li>Identificação como agente</li>
+          </ul>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-num">Pacote 3</div>
+          <div class="pkg-price">N$ 3.900<br><span>renovação</span></div>
+          <ul class="pkg-features">
+            <li>Tradução de documentos</li>
+            <li>Preenchimento de formulários</li>
+            <li>Inscrição na instituição</li>
+            <li>Organização completa de documentos</li>
+            <li>Entrega no Ministério</li>
+            <li>Identificação como agente</li>
+          </ul>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-num">Pacote 4</div>
+          <div class="pkg-price">N$ 6.600<br><span>renovação</span></div>
+          <ul class="pkg-features">
+            <li>Tradução de documentos</li>
+            <li>Preenchimento de formulários</li>
+            <li>Inscrição na instituição</li>
+            <li>Organização completa de documentos</li>
+            <li>Entrega no Ministério</li>
+            <li>Identificação como agente</li>
+            <li>✦ Carimbo de aprovação no Passaporte</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consultoria Educação -->
+    <div style="margin-top:48px;">
+      <h3 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:16px;">📦 Pacotes de Alojamento + Educação (BCF Price List 2026)</h3>
+      <div class="pac-toggle" style="margin:0 0 24px;">
+        <button class="pac-tab active" onclick="switchPac('sem', this)">Sem Visto Incluído</button>
+        <button class="pac-tab" onclick="switchPac('com', this)">Com Visto Incluído</button>
+      </div>
+      <div id="sem" class="pac-table-wrap active">
+        <table class="pac-table">
+          <thead><tr><th>Pacote</th><th>Duração</th><th>Preço Mensal</th><th>Total (N$)</th><th>Total (KZ)</th></tr></thead>
+          <tbody id="semBody"></tbody>
+        </table>
+      </div>
+      <div id="com" class="pac-table-wrap">
+        <table class="pac-table">
+          <thead><tr><th>Pacote</th><th>Duração</th><th>Preço Mensal</th><th>Total (N$)</th><th>Total (KZ)</th></tr></thead>
+          <tbody id="comBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONSULTORIA -->
+<section id="consultoria">
+  <div class="grid-bg"></div>
+  <div class="consult-inner">
+    <div>
+      <div class="section-label">Consultoria BCF</div>
+      <h2 class="section-title">Orientação especializada<br>para a sua jornada</h2>
+      <p class="section-sub">A Consultoria BCF é a ponte ideal para quem deseja emigrar, estudar no exterior ou buscar tratamento médico na Namíbia.</p>
+      <div class="consult-types">
+        <div class="consult-type">
+          <div class="consult-type-icon">🌍</div>
+          <div>
+            <h4>Orientação Geral sobre Emigração</h4>
+            <p>Processo, requisitos, oportunidades e como se estabelecer na Namíbia com segurança.</p>
+          </div>
+        </div>
+        <div class="consult-type">
+          <div class="consult-type-icon">🎓</div>
+          <div>
+            <h4>Consultoria para Estudantes</h4>
+            <p>Inscrição, vistos, alojamento e escolha de escola ou universidade.</p>
+          </div>
+        </div>
+        <div class="consult-type">
+          <div class="consult-type-icon">🏥</div>
+          <div>
+            <h4>Saúde e Tratamento Médico</h4>
+            <p>Orientação sobre visto, hospedagem e transporte para tratamento na Namíbia.</p>
+          </div>
+        </div>
+        <div class="consult-type">
+          <div class="consult-type-icon">📄</div>
+          <div>
+            <h4>Apoio Documental</h4>
+            <p>Traduções, legalizações e preenchimento de formulários oficiais.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="consult-booking-card">
+      <h3>Agendar Sessão</h3>
+      <p style="color:var(--text-muted);font-size:14px;">Invista na sua jornada</p>
+      <div class="invest-amount">3.000 AOA</div>
+      <div class="invest-label">Por sessão de consultoria</div>
+      <div class="format-chips">
+        <span class="format-chip">📱 WhatsApp</span>
+        <span class="format-chip">🎥 Zoom</span>
+        <span class="format-chip">📹 Google Meet</span>
+      </div>
+      <div class="booking-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nome completo</label>
+            <input class="form-input" type="text" placeholder="O seu nome">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefone / WhatsApp</label>
+            <input class="form-input" type="tel" placeholder="+244 900 000 000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de consultoria</label>
+          <select class="form-select">
+            <option>Orientação Geral sobre Emigração</option>
+            <option>Consultoria para Estudantes</option>
+            <option>Turismo ou Estadia Temporária</option>
+            <option>Apoio Documental</option>
+            <option>Saúde e Tratamento Médico</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Formato preferido</label>
+            <select class="form-select">
+              <option>WhatsApp</option>
+              <option>Zoom</option>
+              <option>Google Meet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Data preferida</label>
+            <input class="form-input" type="date">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mensagem (opcional)</label>
+          <textarea class="form-textarea" placeholder="Descreva brevemente a sua situação..."></textarea>
+        </div>
+        <button class="btn-book" onclick="submitBooking()">📅 Confirmar Agendamento</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAGAMENTO -->
+<section id="pagamento">
+  <div class="grid-bg"></div>
+  <div class="pay-inner">
+    <div class="section-label">Formas de Pagamento</div>
+    <h2 class="section-title">Pague com segurança<br>de qualquer lugar</h2>
+    <p class="section-sub">Aceitamos transferências bancárias da Namíbia e de Angola para a sua conveniência.</p>
+
+    <!-- CONVERSOR -->
+    <div class="converter-banner">
+      <h4>💱 Conversor de Preços</h4>
+      <input id="convAmount" class="conv-input" type="number" placeholder="100" oninput="convertCurrency()">
+      <select id="convFrom" class="conv-select" onchange="convertCurrency()">
+        <option value="NS">N$ (Dólar Namibiano)</option>
+        <option value="KZ">KZ (Kwanza)</option>
+      </select>
+      <span class="conv-arrow">→</span>
+      <span class="conv-result" id="convResult">—</span>
+    </div>
+
+    <div class="pay-grid">
+      <div class="pay-card">
+        <h3><span class="country-flag">🇳🇦</span> Namíbia — Standard Bank</h3>
+        <div class="pay-divider"></div>
+        <div class="pay-row"><span class="pay-key">Banco</span><span class="pay-val">Standard Bank Namibia</span></div>
+        <div class="pay-row"><span class="pay-key">Número de conta</span><span class="pay-val">60006468909</span></div>
+        <div class="pay-row"><span class="pay-key">Nome</span><span class="pay-val">Damásio Fiauana</span></div>
+        <div class="pay-row"><span class="pay-key">Ewallet</span><span class="pay-val">0817736080</span></div>
+      </div>
+      <div class="pay-card">
+        <h3><span class="country-flag">🇦🇴</span> Angola — Banco BAI</h3>
+        <div class="pay-divider"></div>
+        <div class="pay-row"><span class="pay-key">Banco</span><span class="pay-val">Banco BAI</span></div>
+        <div class="pay-row"><span class="pay-key">IBAN</span><span class="pay-val" style="font-size:12px">A006 0040000092477 13310173</span></div>
+        <div class="pay-row"><span class="pay-key">Nome</span><span class="pay-val">Damásio Fiauana</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="grid-bg"></div>
+  <div class="contact-inner">
+    <div>
+      <div class="section-label">Fale Connosco</div>
+      <h2 class="section-title">Estamos prontos<br>para o ajudar</h2>
+      <p class="section-sub">A equipa BCF responde rapidamente por WhatsApp, email ou redes sociais.</p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div>
+            <h4>WhatsApp — Namíbia</h4>
+            <a href="https://wa.me/264817736080" target="_blank">+264 817 736 080</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Telefone — Angola</h4>
+            <a href="tel:+244932130990">+244 932 130 990</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <h4>Email</h4>
+            <a href="mailto:bcfconsul@gmail.com">bcfconsul@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📸</div>
+          <div>
+            <h4>Instagram</h4>
+            <a href="https://instagram.com/bcf.consultoria_na" target="_blank">@bcf.consultoria_na</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-wrap">
+      <h3>📩 Envie-nos uma mensagem</h3>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nome</label>
+            <input class="form-input" type="text" placeholder="O seu nome">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefone</label>
+            <input class="form-input" type="tel" placeholder="+244...">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" placeholder="email@exemplo.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Assunto</label>
+          <select class="form-select">
+            <option>Informações sobre Vistos</option>
+            <option>Pacotes de Alojamento</option>
+            <option>Turismo em Swakopmund</option>
+            <option>Consultoria Especializada</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mensagem</label>
+          <textarea class="form-textarea" placeholder="Como podemos ajudar?"></textarea>
+        </div>
+        <button class="btn-book" onclick="submitContact()">Enviar Mensagem</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">BC<span>F</span> Consultoria</div>
+    <div class="footer-copy">© 2026 BCF Consultoria. Windhoek, Namíbia.</div>
+    <div class="footer-socials">
+      <a href="https://wa.me/264817736080" class="social-btn" target="_blank">💬</a>
+      <a href="https://instagram.com/bcf.consultoria_na" class="social-btn" target="_blank">📸</a>
+      <a href="mailto:bcfconsul@gmail.com" class="social-btn">📧</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/264817736080" class="wa-float" target="_blank">
+  💬
+  <span class="wa-tooltip">Fale connosco agora</span>
+</a>
+
+<script>
+  // TAB SWITCH EDUCATION
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // PAC SWITCH
+  function switchPac(id, btn) {
+    document.querySelectorAll('.pac-table-wrap').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.pac-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // TABLE DATA
+  const semData = [
+    ['ESSENCIAL','1 MÊS','N$ 7.000','7.000','441.000'],
+    ['ESSENCIAL','2 MESES','N$ 7.000','14.000','882.000'],
+    ['ESSENCIAL','3 MESES','N$ 7.000','21.000','1.323.000'],
+    ['ESSENCIAL','4 MESES','N$ 7.000','28.000','1.764.000'],
+    ['ESSENCIAL','5 MESES','N$ 7.000','35.000','2.205.000'],
+    ['ESSENCIAL','6 MESES','N$ 7.000','42.000','2.646.000'],
+    ['PLUS','1 MÊS','N$ 8.200','8.200','516.600'],
+    ['PLUS','2 MESES','N$ 8.200','16.400','1.033.200'],
+    ['PLUS','3 MESES','N$ 8.200','24.600','1.549.800'],
+    ['PLUS','4 MESES','N$ 8.200','32.800','2.066.400'],
+    ['PLUS','5 MESES','N$ 8.200','41.000','2.583.000'],
+    ['PLUS','6 MESES','N$ 8.200','49.200','3.099.600'],
+    ['PREMIUM','1 MÊS','N$ 9.500','9.500','598.500'],
+    ['PREMIUM','2 MESES','N$ 9.500','19.000','1.197.000'],
+    ['PREMIUM','3 MESES','N$ 9.500','28.500','1.795.500'],
+    ['PREMIUM','4 MESES','N$ 9.500','38.000','2.394.000'],
+    ['PREMIUM','5 MESES','N$ 9.500','47.500','2.992.500'],
+    ['PREMIUM','6 MESES','N$ 9.500','57.000','3.591.000'],
+  ];
+  const comData = [
+    ['ESSENCIAL','1 MÊS','N$ 7.000','11.500','724.500'],
+    ['ESSENCIAL','2 MESES','N$ 7.000','18.500','1.165.500'],
+    ['ESSENCIAL','3 MESES','N$ 7.000','25.500','1.606.500'],
+    ['ESSENCIAL','4 MESES','N$ 7.000','32.500','2.047.500'],
+    ['ESSENCIAL','5 MESES','N$ 7.000','39.500','2.488.500'],
+    ['ESSENCIAL','6 MESES','N$ 7.000','46.500','2.929.500'],
+    ['PLUS','1 MÊS','N$ 8.200','12.700','800.100'],
+    ['PLUS','2 MESES','N$ 8.200','20.900','1.316.700'],
+    ['PLUS','3 MESES','N$ 8.200','29.100','1.833.300'],
+    ['PLUS','4 MESES','N$ 8.200','37.300','2.349.900'],
+    ['PLUS','5 MESES','N$ 8.200','45.500','2.866.500'],
+    ['PLUS','6 MESES','N$ 8.200','53.700','3.383.100'],
+    ['PREMIUM','1 MÊS','N$ 9.500','14.000','882.000'],
+    ['PREMIUM','2 MESES','N$ 9.500','23.500','1.480.500'],
+    ['PREMIUM','3 MESES','N$ 9.500','33.000','2.079.000'],
+    ['PREMIUM','4 MESES','N$ 9.500','42.500','2.677.500'],
+    ['PREMIUM','5 MESES','N$ 9.500','52.000','3.276.000'],
+    ['PREMIUM','6 MESES','N$ 9.500','61.500','3.874.500'],
+  ];
+  const tierMap = { 'ESSENCIAL': 'E', 'PLUS': 'P', 'PREMIUM': 'PR' };
+
+  function renderTable(data, bodyId) {
+    const body = document.getElementById(bodyId);
+    body.innerHTML = data.map(row => `
+      <tr>
+        <td><span class="tier-badge tier-${tierMap[row[0]]}">${row[0]}</span></td>
+        <td>${row[1]}</td>
+        <td style="color:var(--text-muted)">${row[2]}</td>
+        <td class="price-cell">N$ ${row[3]}</td>
+        <td style="color:var(--text-muted)">KZ ${row[4]}</td>
+      </tr>
+    `).join('');
+  }
+  renderTable(semData, 'semBody');
+  renderTable(comData, 'comBody');
+
+  // CURRENCY CONVERTER
+  const NS_TO_KZ = 63; // approximate rate
+  function convertCurrency() {
+    const amount = parseFloat(document.getElementById('convAmount').value) || 0;
+    const from = document.getElementById('convFrom').value;
+    let result, unit;
+    if (from === 'NS') {
+      result = (amount * NS_TO_KZ).toLocaleString('pt-PT');
+      unit = 'KZ';
+    } else {
+      result = (amount / NS_TO_KZ).toLocaleString('pt-PT', {maximumFractionDigits: 2});
+      unit = 'N$';
+    }
+    document.getElementById('convResult').textContent = `${unit} ${result}`;
+  }
+
+  // SUBMIT HANDLERS
+  function submitBooking() {
+    alert('✅ Pedido de agendamento enviado!\n\nA nossa equipa entrará em contacto brevemente via WhatsApp para confirmar a sua sessão de consultoria.\n\nObrigado por escolher a BCF!');
+  }
+  function submitContact() {
+    alert('✅ Mensagem enviada com sucesso!\n\nA equipa BCF responderá em breve.\n\nObrigado pelo contacto!');
+  }
+
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
