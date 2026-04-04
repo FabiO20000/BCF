@@ -524,33 +524,124 @@
     font-size: 13px; font-weight: 500;
   }
   .booking-form { display: flex; flex-direction: column; gap: 14px; }
+  /* ========================================
+     UNIFIED FORM FIELD SYSTEM — bcf-field
+     Applies to ALL inputs, selects, textareas
+     ======================================== */
   .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-label { font-size: 13px; font-weight: 500; color: var(--text-muted); }
-  .form-input, .form-select, .form-textarea {
-    background: rgba(0,30,100,0.5);
-    border: 1px solid rgba(0,191,255,0.2);
+  .form-label {
+    font-size: 13px; font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+
+  /* Single class that targets every field type */
+  .bcf-field,
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    background: rgba(0, 20, 80, 0.6);
+    border: 1.5px solid rgba(0, 191, 255, 0.2);
     border-radius: 10px;
     padding: 12px 16px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 15px; color: var(--white);
-    transition: border-color 0.2s;
+    font-size: 15px;
+    color: var(--white);
     outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    -webkit-appearance: none;
+    appearance: none;
   }
-  .form-input:focus, .form-select:focus, .form-textarea:focus {
+  .bcf-field::placeholder,
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: rgba(144, 170, 207, 0.5);
+  }
+  .bcf-field:hover,
+  .form-input:hover,
+  .form-select:hover,
+  .form-textarea:hover {
+    border-color: rgba(0, 191, 255, 0.4);
+    background: rgba(0, 30, 100, 0.65);
+  }
+  .bcf-field:focus,
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
     border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.12), 0 2px 12px rgba(0, 191, 255, 0.2);
+    background: rgba(0, 30, 110, 0.7);
   }
-  .form-select option { background: var(--blue-dark); }
+  /* Invalid state */
+  .bcf-field:invalid:not(:placeholder-shown),
+  .form-input:invalid:not(:placeholder-shown) {
+    border-color: #FF6B6B;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+  }
+  .bcf-field option,
+  .form-select option { background: #001450; color: var(--white); }
   .form-textarea { resize: vertical; min-height: 100px; }
+
+  /* Select arrow */
+  .form-select, select.bcf-field {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2300E5FF' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 38px;
+    cursor: pointer;
+  }
+
+  /* Honeypot — hidden from humans */
+  .hp-field { display: none !important; position: absolute; left: -9999px; }
+
   .btn-book {
     background: linear-gradient(135deg, var(--cyan), var(--blue-2));
     color: var(--white); border: none; cursor: pointer;
     padding: 16px; border-radius: 12px;
     font-family: 'Syne', sans-serif;
     font-size: 16px; font-weight: 700;
-    transition: transform 0.2s, box-shadow 0.2s;
-    margin-top: 6px;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    margin-top: 6px; width: 100%;
   }
-  .btn-book:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,191,255,0.4); }
+  .btn-book:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,191,255,0.4); }
+  .btn-book:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+  /* ========================================
+     TOAST NOTIFICATION
+     ======================================== */
+  #bcf-toast {
+    position: fixed;
+    bottom: 108px; right: 32px;
+    z-index: 9999;
+    display: flex; align-items: flex-start; gap: 14px;
+    background: linear-gradient(135deg, rgba(0,50,150,0.97), rgba(0,25,80,0.98));
+    border: 1px solid rgba(0,229,255,0.35);
+    border-radius: 16px;
+    padding: 20px 24px;
+    max-width: 340px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,191,255,0.1);
+    transform: translateX(400px);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+    pointer-events: none;
+  }
+  #bcf-toast.show {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .toast-icon { font-size: 28px; flex-shrink: 0; line-height: 1; }
+  .toast-body {}
+  .toast-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .toast-msg { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  .toast-close {
+    position: absolute; top: 12px; right: 14px;
+    background: none; border: none; cursor: pointer;
+    color: var(--text-muted); font-size: 18px; line-height: 1;
+    transition: color 0.2s;
+  }
+  .toast-close:hover { color: var(--white); }
 
   /* PACOTES ALOJAMENTO */
   #pacotes {
@@ -1290,20 +1381,37 @@
         <span class="format-chip">🎥 Zoom</span>
         <span class="format-chip">📹 Google Meet</span>
       </div>
-      <div class="booking-form">
+      <form class="booking-form bcf-form"
+            action="https://formspree.io/f/dinilsonfabio19@gmail.com"
+            method="POST"
+            data-form-name="Agendamento de Consultoria">
+        <!-- Identification -->
+        <input type="hidden" name="_subject" value="Novo Lead: Agendamento de Consultoria BCF">
+        <!-- Honeypot anti-spam -->
+        <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off">
+
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Nome completo</label>
-            <input class="form-input" type="text" placeholder="O seu nome">
+            <label class="form-label" for="book-nome">Nome completo *</label>
+            <input class="form-input bcf-field" id="book-nome" type="text" name="nome"
+                   placeholder="O seu nome" required minlength="2">
           </div>
           <div class="form-group">
-            <label class="form-label">Telefone / WhatsApp</label>
-            <input class="form-input" type="tel" placeholder="+244 900 000 000">
+            <label class="form-label" for="book-tel">Telefone / WhatsApp *</label>
+            <input class="form-input bcf-field" id="book-tel" type="tel" name="telefone"
+                   placeholder="+244 900 000 000" required
+                   pattern="[\+0-9\s\-]{7,20}">
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Tipo de consultoria</label>
-          <select class="form-select">
+          <label class="form-label" for="book-email">Email *</label>
+          <input class="form-input bcf-field" id="book-email" type="email" name="email"
+                 placeholder="email@exemplo.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="book-tipo">Tipo de consultoria *</label>
+          <select class="form-select bcf-field" id="book-tipo" name="tipo_consultoria" required>
+            <option value="" disabled selected>Selecione um tipo...</option>
             <option>Orientação Geral sobre Emigração</option>
             <option>Consultoria para Estudantes</option>
             <option>Turismo ou Estadia Temporária</option>
@@ -1313,24 +1421,26 @@
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Formato preferido</label>
-            <select class="form-select">
+            <label class="form-label" for="book-formato">Formato preferido *</label>
+            <select class="form-select bcf-field" id="book-formato" name="formato" required>
+              <option value="" disabled selected>Selecione...</option>
               <option>WhatsApp</option>
               <option>Zoom</option>
               <option>Google Meet</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Data preferida</label>
-            <input class="form-input" type="date">
+            <label class="form-label" for="book-data">Data preferida *</label>
+            <input class="form-input bcf-field" id="book-data" type="date" name="data_preferida" required>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Mensagem (opcional)</label>
-          <textarea class="form-textarea" placeholder="Descreva brevemente a sua situação..."></textarea>
+          <label class="form-label" for="book-msg">Mensagem (opcional)</label>
+          <textarea class="form-textarea bcf-field" id="book-msg" name="mensagem"
+                    placeholder="Descreva brevemente a sua situação..."></textarea>
         </div>
-        <button class="btn-book" onclick="submitBooking()">📅 Confirmar Agendamento</button>
-      </div>
+        <button type="submit" class="btn-book">📅 Confirmar Agendamento</button>
+      </form>
     </div>
   </div>
 </section>
@@ -1402,7 +1512,7 @@
           <div class="contact-icon">📧</div>
           <div>
             <h4>Email</h4>
-            <a href="mailto:bcfconsul@gmail.com">bcfconsul@gmail.com</a>
+            <a href="/cdn-cgi/l/email-protection#1c7e7f7a7f73726f69705c7b717d7570327f7371"><span class="__cf_email__" data-cfemail="b8dadbdedbd7d6cbcdd4f8dfd5d9d1d496dbd7d5">[email&#160;protected]</span></a>
           </div>
         </div>
         <div class="contact-item">
@@ -1416,24 +1526,37 @@
     </div>
     <div class="contact-form-wrap">
       <h3>📩 Envie-nos uma mensagem</h3>
-      <div class="contact-form">
+      <form class="contact-form bcf-form"
+            action="https://formspree.io/f/dinilsonfabio19@gmail.com"
+            method="POST"
+            data-form-name="Formulário de Contacto">
+        <!-- Identification -->
+        <input type="hidden" name="_subject" value="Novo Lead: Contacto Geral BCF">
+        <!-- Honeypot anti-spam -->
+        <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off">
+
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Nome</label>
-            <input class="form-input" type="text" placeholder="O seu nome">
+            <label class="form-label" for="ct-nome">Nome *</label>
+            <input class="form-input bcf-field" id="ct-nome" type="text" name="nome"
+                   placeholder="O seu nome" required minlength="2">
           </div>
           <div class="form-group">
-            <label class="form-label">Telefone</label>
-            <input class="form-input" type="tel" placeholder="+244...">
+            <label class="form-label" for="ct-tel">Telefone *</label>
+            <input class="form-input bcf-field" id="ct-tel" type="tel" name="telefone"
+                   placeholder="+244..." required
+                   pattern="[\+0-9\s\-]{7,20}">
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Email</label>
-          <input class="form-input" type="email" placeholder="email@exemplo.com">
+          <label class="form-label" for="ct-email">Email *</label>
+          <input class="form-input bcf-field" id="ct-email" type="email" name="email"
+                 placeholder="email@exemplo.com" required>
         </div>
         <div class="form-group">
-          <label class="form-label">Assunto</label>
-          <select class="form-select">
+          <label class="form-label" for="ct-assunto">Assunto *</label>
+          <select class="form-select bcf-field" id="ct-assunto" name="assunto" required>
+            <option value="" disabled selected>Selecione um assunto...</option>
             <option>Informações sobre Vistos</option>
             <option>Pacotes de Alojamento</option>
             <option>Turismo em Swakopmund</option>
@@ -1442,14 +1565,25 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Mensagem</label>
-          <textarea class="form-textarea" placeholder="Como podemos ajudar?"></textarea>
+          <label class="form-label" for="ct-msg">Mensagem *</label>
+          <textarea class="form-textarea bcf-field" id="ct-msg" name="mensagem"
+                    placeholder="Como podemos ajudar?" required minlength="10"></textarea>
         </div>
-        <button class="btn-book" onclick="submitContact()">Enviar Mensagem</button>
-      </div>
+        <button type="submit" class="btn-book">Enviar Mensagem</button>
+      </form>
     </div>
   </div>
 </section>
+
+<!-- TOAST NOTIFICATION -->
+<div id="bcf-toast" role="alert" aria-live="polite">
+  <span class="toast-icon" id="toast-icon">✅</span>
+  <div class="toast-body">
+    <div class="toast-title" id="toast-title">Mensagem enviada!</div>
+    <div class="toast-msg" id="toast-msg">A nossa equipa responderá em breve.</div>
+  </div>
+  <button class="toast-close" onclick="hideToast()" aria-label="Fechar">×</button>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1459,7 +1593,7 @@
     <div class="footer-socials">
       <a href="https://wa.me/264817736080" class="social-btn" target="_blank">💬</a>
       <a href="https://instagram.com/bcf.consultoria_na" class="social-btn" target="_blank">📸</a>
-      <a href="mailto:bcfconsul@gmail.com" class="social-btn">📧</a>
+      <a href="/cdn-cgi/l/email-protection#70121316131f1e03051c30171d11191c5e131f1d" class="social-btn">📧</a>
     </div>
   </div>
 </footer>
@@ -1471,15 +1605,15 @@
 </a>
 
 <script>
-  // TAB SWITCH EDUCATION
+  // ============================================================
+  //  TAB SWITCHES
+  // ============================================================
   function switchTab(id, btn) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     btn.classList.add('active');
   }
-
-  // PAC SWITCH
   function switchPac(id, btn) {
     document.querySelectorAll('.pac-table-wrap').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.pac-tab').forEach(el => el.classList.remove('active'));
@@ -1487,7 +1621,9 @@
     btn.classList.add('active');
   }
 
-  // TABLE DATA
+  // ============================================================
+  //  PRICE TABLES
+  // ============================================================
   const semData = [
     ['ESSENCIAL','1 MÊS','N$ 7.000','7.000','441.000'],
     ['ESSENCIAL','2 MESES','N$ 7.000','14.000','882.000'],
@@ -1529,24 +1665,23 @@
     ['PREMIUM','6 MESES','N$ 9.500','61.500','3.874.500'],
   ];
   const tierMap = { 'ESSENCIAL': 'E', 'PLUS': 'P', 'PREMIUM': 'PR' };
-
   function renderTable(data, bodyId) {
-    const body = document.getElementById(bodyId);
-    body.innerHTML = data.map(row => `
+    document.getElementById(bodyId).innerHTML = data.map(row => `
       <tr>
         <td><span class="tier-badge tier-${tierMap[row[0]]}">${row[0]}</span></td>
         <td>${row[1]}</td>
         <td style="color:var(--text-muted)">${row[2]}</td>
         <td class="price-cell">N$ ${row[3]}</td>
         <td style="color:var(--text-muted)">KZ ${row[4]}</td>
-      </tr>
-    `).join('');
+      </tr>`).join('');
   }
   renderTable(semData, 'semBody');
   renderTable(comData, 'comBody');
 
-  // CURRENCY CONVERTER
-  const NS_TO_KZ = 63; // approximate rate
+  // ============================================================
+  //  CURRENCY CONVERTER
+  // ============================================================
+  const NS_TO_KZ = 63;
   function convertCurrency() {
     const amount = parseFloat(document.getElementById('convAmount').value) || 0;
     const from = document.getElementById('convFrom').value;
@@ -1555,25 +1690,102 @@
       result = (amount * NS_TO_KZ).toLocaleString('pt-PT');
       unit = 'KZ';
     } else {
-      result = (amount / NS_TO_KZ).toLocaleString('pt-PT', {maximumFractionDigits: 2});
+      result = (amount / NS_TO_KZ).toLocaleString('pt-PT', { maximumFractionDigits: 2 });
       unit = 'N$';
     }
     document.getElementById('convResult').textContent = `${unit} ${result}`;
   }
 
-  // SUBMIT HANDLERS
-  function submitBooking() {
-    alert('✅ Pedido de agendamento enviado!\n\nA nossa equipa entrará em contacto brevemente via WhatsApp para confirmar a sua sessão de consultoria.\n\nObrigado por escolher a BCF!');
+  // ============================================================
+  //  TOAST SYSTEM
+  // ============================================================
+  let toastTimer = null;
+  function showToast(icon, title, msg, isError) {
+    const toast = document.getElementById('bcf-toast');
+    document.getElementById('toast-icon').textContent = icon;
+    document.getElementById('toast-title').textContent = title;
+    document.getElementById('toast-msg').textContent = msg;
+    toast.style.borderColor = isError ? 'rgba(255,107,107,0.4)' : 'rgba(0,229,255,0.35)';
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, 6000);
   }
-  function submitContact() {
-    alert('✅ Mensagem enviada com sucesso!\n\nA equipa BCF responderá em breve.\n\nObrigado pelo contacto!');
+  function hideToast() {
+    document.getElementById('bcf-toast').classList.remove('show');
   }
 
-  // SMOOTH SCROLL
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
+  // ============================================================
+  //  GLOBAL FORMSPREE HANDLER — intercepts ALL .bcf-form
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', function() {
+
+    document.querySelectorAll('form.bcf-form').forEach(function(form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        var btn = form.querySelector('button[type="submit"]');
+        var originalText = btn.innerHTML;
+        var formName = form.dataset.formName || 'Formulário';
+
+        // Honeypot: if bot filled the hidden field, abort silently
+        var honeypot = form.querySelector('input[name="_gotcha"]');
+        if (honeypot && honeypot.value.trim() !== '') return;
+
+        // Loading state
+        btn.disabled = true;
+        btn.innerHTML = '<span style="opacity:0.7">⏳ A enviar...</span>';
+
+        try {
+          var data = new FormData(form);
+          var response = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (response.ok) {
+            form.reset();
+            showToast(
+              '✅',
+              'Enviado com sucesso!',
+              'O seu pedido de "' + formName + '" foi recebido. Entraremos em contacto brevemente via WhatsApp ou e-mail.',
+              false
+            );
+          } else {
+            var json = await response.json().catch(function(){ return {}; });
+            var errMsg = json.errors
+              ? json.errors.map(function(e){ return e.message; }).join(', ')
+              : 'Erro desconhecido. Tente novamente ou contacte-nos pelo WhatsApp.';
+            showToast('⚠️', 'Erro no envio', errMsg, true);
+          }
+        } catch(networkErr) {
+          showToast(
+            '📶',
+            'Sem ligação à internet',
+            'Verifique a sua ligação e tente novamente, ou contacte-nos diretamente: +264 817 736 080.',
+            true
+          );
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        }
+      });
+    });
+
+    // Set min date on date inputs to today
+    var today = new Date().toISOString().split('T')[0];
+    document.querySelectorAll('input[type="date"]').forEach(function(el) {
+      el.setAttribute('min', today);
+    });
+  });
+
+  // ============================================================
+  //  SMOOTH SCROLL
+  // ============================================================
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
       e.preventDefault();
-      const target = document.querySelector(a.getAttribute('href'));
+      var target = document.querySelector(a.getAttribute('href'));
       if (target) target.scrollIntoView({ behavior: 'smooth' });
     });
   });
